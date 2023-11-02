@@ -1,0 +1,96 @@
+/* Reset some basic elements */
+body, h2, table, th, td, button, input {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Apply a nice background to the body */
+  body {
+    background-color: #f4f7fa;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+  }
+  
+  /* Style the header */
+  h2 {
+    color: #0a2e36;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Style the update button */
+  #update-all-grades-btn {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  #update-all-grades-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Style the table */
+  #teacher-courses-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  #teacher-courses-table thead {
+    background-color: #007bff;
+    color: #ffffff;
+  }
+  
+  #teacher-courses-table th,
+  #teacher-courses-table td {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #dddddd;
+  }
+  
+  /* Add a hover effect on table rows */
+  #teacher-courses-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  #teacher-courses-table tr:hover {
+    background-color: #ddd;
+  }
+  
+  /* Style the form within the table */
+  form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  input[type='text'] {
+    padding: 5px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .update-grade-btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #28a745;
+    color: #ffffff;
+    transition: background-color 0.3s ease;
+  }
+  
+  .update-grade-btn:hover {
+    background-color: #218838;
+  }
+  

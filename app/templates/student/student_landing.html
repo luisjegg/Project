@@ -1,0 +1,67 @@
+{% extends "base_student.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='student_landing.css') }}">
+    <h2>My Classes</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Class Name</th>
+                <th>Time</th>
+                <th>Teacher Name</th>
+                <th>Capacity</th>
+                <th>Enrolled Students</th>
+                <th>Grade</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for enrollment in enrollments %}
+            <tr>
+                <td>{{ enrollment.course.class_name }}</td>
+                <td>{{ enrollment.course.time }}</td>
+                <td>{{ enrollment.course.teacher.name }}</td>
+                <td>{{ enrollment.course.capacity }}</td>
+                <td>{{ enrollment.course.enrolled_count }}</td>
+                <td>{{ enrollment.grade }}</td>
+                <td>
+                    <form action="{{ url_for('views.remove_class', course_id=enrollment.course_id) }}" method="post">
+                        <input type="submit" value="Remove">
+                    </form>
+                </td>  
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Available Classes</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Class Name</th>
+                <th>Time</th>
+                <th>Teacher Name</th>
+                <th>Capacity</th>
+                <th>Enrolled Students</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in courses %}
+            <tr>
+                <td>{{ course.class_name }}</td>
+                <td>{{ course.time }}</td>
+                <td>{{ course.teacher.name }}</td>
+                <td>{{ course.capacity }}</td>
+                <td>{{ course.enrolled_count }}</td>
+                <td>
+                    <form action="{{ url_for('views.enroll_class') }}" method="post">
+                        <input type="hidden" name="course_id" value="{{ course.id }}">
+                        <input type="submit" value="Enroll">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

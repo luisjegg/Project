@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    <!-- List of users -->
+    <h2>Users</h2>
+    <ul id="user-list">
+        <!-- Assuming you pass a 'users' variable to your template -->
+        {% for user in users %}
+            <li>{{ user.username }}</li>
+        {% endfor %}
+    </ul>
+    <!-- Logout link -->
+    <a href="/admin/logout/">Logout</a>
+</body>
+</html>

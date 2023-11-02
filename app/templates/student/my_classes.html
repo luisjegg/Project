@@ -1,0 +1,27 @@
+{% extends "base_student.html" %}
+
+{% block content %}
+    <h2>My Classes</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Class Name</th>
+                <th>Time</th>
+                <th>Teacher Name</th>
+                <th>Capacity</th>
+                <th>Grade</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for enrollment in enrollments %}
+            <tr>
+                <td>{{ enrollment.course.class_name }}</td>
+                <td>{{ enrollment.course.time }}</td>
+                <td>{{ enrollment.course.teacher.name }}</td>
+                <td>{{ enrollment.course.capacity }}</td>
+                <td>{{ enrollment.grade }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

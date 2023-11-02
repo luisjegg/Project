@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your App Name</title>
+    <!-- You can link to stylesheets, fonts, or other head elements here. -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <!-- Navigation elements can be added here. -->
+            {% if 'logged_in' in session and session['logged_in'] %}
+                <a href="/logout">Logout</a> <!-- Logout link -->
+                <a href="/teacher">Teacher Dashboard</a>
+            {% else %}
+                <a href="/">Home</a>  <!-- Default home link -->
+                <!-- Add other links for non-logged-in users if needed. -->
+            {% endif %}
+            <!-- Add other links or menu items as required. -->
+        </nav>
+    </header>
+    
+    <main>
+        <!-- This is where content from child templates will be injected. -->
+        {% block content %}{% endblock %}
+    </main>
+    
+    <footer>
+        <p>© Your App Name 2023</p>
+    </footer>
+
+    <!-- Link to any necessary JavaScript files here. -->
+    <!-- <script src="{{ url_for('static', filename='script.js') }}"></script> -->
+</body>
+</html>

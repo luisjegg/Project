@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Students in Course</title>
+</head>
+<body>
+
+<h2>Students in this Course</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Student Name</th>
+            <th>Grade</th>
+            <th>Update Grade</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for enrollment in enrollments %}
+        <tr>
+            <td>{{ enrollment.student.username }}</td>
+            <td>{{ enrollment.grade }}</td>
+            <td>
+                <form action="{{ url_for('update_student_grade', course_id=enrollment.course.id) }}" method="post">
+                    <input type="hidden" name="student_id" value="{{ enrollment.student.id }}">
+                    <input type="number" name="grade" value="{{ enrollment.grade }}">
+                    <input type="submit" value="Update Grade">
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ url_for('teacher_landing') }}">Back to Courses</a>
+
+</body>
+</html>

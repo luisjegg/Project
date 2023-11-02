@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Display Teacher's Courses and Students -->
+<h2>Your Classes</h2>
+<link rel="stylesheet" href="{{ url_for('static', filename='teacher_landing.css') }}">
+<button id="update-all-grades-btn">Update All Grades</button>
+
+<table id="teacher-courses-table" border="1">
+    <thead>
+        <tr>
+            <th>Class Name</th>
+            <th>Student Name</th>
+            <th>Grade</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="teacher-courses">
+        <!-- JavaScript will populate this -->
+    </tbody>
+</table>
+
+<!-- JavaScript to Fetch Data and Handle Grade Updates with AJAX -->
+<script>
+    function updateGrade(event) {
+        event.preventDefault(); // Stop the form from submitting and redirecting
+        let form = event.target.closest('form');
+        let formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert('Grade updated successfully!');
+                location.reload();
+            } else {
+                alert('Error updating grade. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('There was an error:', error);
+            alert('Error updating grade. Please try again.');
+        });
+    }
+
+    fetch('/teacher/courses')
+    .then(response => response.json())
+    .then(courses => {
+        let coursesTBody = document.getElementById('teacher-courses');
+        courses.forEach(course => {
+            fetch(`/teacher/course/${course.id}/students`)
+                .then(res => res.json())
+                .then(students => {
+                    students.forEach(student => {
+                        let tr = document.createElement('tr');
+                        
+                        let tdClassName = document.createElement('td');
+                        tdClassName.innerText = course.class_name;
+                        tr.appendChild(tdClassName);
+    
+                        let tdStudentName = document.createElement('td');
+                        tdStudentName.innerText = student.student_name;
+                        tr.appendChild(tdStudentName);
+    
+                        let tdGrade = document.createElement('td');
+                        tdGrade.innerText = student.grade;
+                        tr.appendChild(tdGrade);
+    
+                        let tdActions = document.createElement('td');
+                        let form = document.createElement('form');
+                        form.setAttribute('method', 'post');
+                        form.setAttribute('action', `/teacher/course/${course.id}/update_grade`);
+    
+                        let gradeInput = document.createElement('input');
+                        gradeInput.setAttribute('type', 'text');
+                        gradeInput.setAttribute('name', 'grade');
+                      //  gradeInput.setAttribute('value', student.grade);
+                        form.appendChild(gradeInput);
+    
+                        let studentIdInput = document.createElement('input');
+                        studentIdInput.setAttribute('type', 'hidden');
+                        studentIdInput.setAttribute('name', 'student_id');
+                        studentIdInput.setAttribute('value', student.student_id);
+                        form.appendChild(studentIdInput);
+    
+                        let submitButton = document.createElement('input');
+                        submitButton.setAttribute('type', 'submit');
+                        submitButton.setAttribute('value', 'Update');
+                        submitButton.setAttribute('class', 'update-grade-btn');
+                        submitButton.addEventListener('click', updateGrade);  // Attach event listener here
+                        form.appendChild(submitButton);
+    
+                        tdActions.appendChild(form);
+                        tr.appendChild(tdActions);
+    
+                        coursesTBody.appendChild(tr);
+                    });
+                });
+        });
+    });
+
+    // Handling "Update All Grades" button click
+    document.getElementById('update-all-grades-btn').addEventListener('click', function() {
+        document.querySelectorAll('.update-grade-btn').forEach(button => {
+            button.click();
+        });
+    });
+
+</script>
+
+{% endblock %}
